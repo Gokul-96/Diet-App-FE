@@ -93,6 +93,7 @@ function Login() {
             </Link>
           </p>
         </Form>
+        <p>Email: krish@gmail.com , Password: krish</p>
       </div>
     </div>
      
