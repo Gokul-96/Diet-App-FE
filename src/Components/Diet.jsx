@@ -25,29 +25,31 @@ function Diet() {
           `${ApiRoutes.TRACK_DATE.path}/${loggedData.user.userid}/${
             date.getMonth() + 1
           }-${date.getDate()}-${date.getFullYear()}`,
-
           {
             headers: {
               Authorization: `Bearer ${loggedData.user.token}`,
             },
           }
         );
-
+    
+        console.log("Fetched data response:", response);
+        console.log("Fetched data items:", response.data); // Log the items specifically
         const data = response.data;
-
+    
         setitem(data);
-
+    
         if (response.status === 200) {
           toast.success("Food tracked successfully");
           console.log("Food tracked successfully:", data);
         } else {
-          console.log("Error  in tracking food:", data);
+          console.log("Error in tracking food:", data);
         }
       } catch (error) {
-        toast.error("Error  in tracking food");
+        toast.error("Error in tracking food");
+        console.error("Fetch error:", error); // Log any errors
       }
     };
-
+    
     fetchData();
   }, [date]);
 
@@ -90,20 +92,22 @@ function Diet() {
             style={{ width: "300px", height: "40px", fontSize: "16px" }}
           />
 
-          {item.map((item) => {
-            return (
-              <div className="item" key={item._id}>
-                <h4>
-                  {item.foodId?.name || "Unknown Food"} (
-                  {item.details?.calories || 0} Kcal for {item.quantity}g)
-                </h4>
-                <p>Protein: {item.details?.protein || 0}g</p>
-                <p>Carbohydrate: {item.details?.carbohydrate || 0}g</p>
-                <p>Fibre: {item.details?.fibre || 0}g</p>
-                <p>Fat: {item.details?.fat || 0}g</p>
-              </div>
-            );
-          })}
+{item.map((item) => {
+    return (
+        <div className="item" key={item._id}>
+            <h4>
+                {item.foodId?.name || "Unknown Food"} ( {/* This dynamically displays the food name */}
+                {item.details?.calories || 0} Kcal for {item.quantity}g)
+            </h4>
+            <p>Protein: {item.details?.protein || 0}g</p>
+            <p>Carbohydrate: {item.details?.carbohydrate || 0}g</p>
+            <p>Fibre: {item.details?.fibre || 0}g</p>
+            <p>Fat: {item.details?.fat || 0}g</p>
+        </div>
+    );
+})}
+
+
 
           <div className="item ">
             <h3 className="title" style={{ color: "red" }}>
